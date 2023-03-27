@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CVController;
 use App\Http\Controllers\EmployeeController;
+use \App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,9 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-//Route::redirect('/', 'employees');
+Route::redirect('/', 'employees');
 
 Route::get('/Miliuchenko/cv', [CVController::class, 'cv']);
+Route::get('departments/{id}', [DepartmentController::class, 'show']);
 
 Route::resource('employees', EmployeeController::class);

@@ -5,18 +5,9 @@
 @section('header')
     <p>Logo</p>
     <nav>
-        <ul>
-            <li>
-                <a href="{{URL::to('employees')}}">
-                    Home
-                </a>
-            </li>
-{{--            <li>--}}
-{{--                <a href="{{route('about')}}">--}}
-{{--                    About--}}
-{{--                </a>--}}
-{{--            </li>--}}
-        </ul>
+        <a href="{{URL::to('employees')}}">
+            Home
+        </a>
     </nav>
 @endsection
 

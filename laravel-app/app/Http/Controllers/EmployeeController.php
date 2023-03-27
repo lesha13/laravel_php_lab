@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Department;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,7 +17,8 @@ class EmployeeController extends Controller
     public function index(): View
     {
         $employees = Employee::all();
-        return view('employee.index', ['employees' => $employees]);
+        $departments = Department::all();
+        return view('employee.index', ['employees' => $employees, 'departments' => $departments]);
     }
 
     /**
@@ -32,9 +34,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request): View
     {
-        print_r($request->all(['name', 'position', 'salary', 'experience', 'department_id']));
         $employee = Employee::create(
-            $request->all(['name', 'position', 'salary', 'experience', 'department_id'])
+            $request->all(['name', 'position', 'salary', 'experience'])
         );
         return view(
             'employee.store',
@@ -87,12 +88,7 @@ class EmployeeController extends Controller
         $employee->experience = $request->input('experience');
         $employee->department_id = $request->input('department_id');
         $employee->save();
-        return view(
-            'employee.update',
-            [
-                'employee' => $employee
-            ]
-        );
+        return view('employee.update', ['employee' => $employee]);
     }
 
     /**
@@ -106,9 +102,6 @@ class EmployeeController extends Controller
             return abort(404);
         }
         $employee->delete();
-        return view(
-            'employee.destroy',
-            ['employee' => $employee]
-        );
+        return view('employee.destroy', ['employee' => $employee]);
     }
 }
