@@ -34,9 +34,18 @@ class EmployeeController extends Controller
      */
     public function store(Request $request): View
     {
-        $employee = Employee::create(
-            $request->all(['name', 'position', 'salary', 'experience'])
-        );
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'position' => 'required|max:255',
+            'salary' => 'required',
+            'experience' => 'required',
+        ]);
+
+        if ($validated){
+            $employee = Employee::create(
+                $request->all(['name', 'position', 'salary', 'experience', 'department_id'])
+            );
+        }
         return view(
             'employee.store',
             ['employee' => $employee]
@@ -82,12 +91,20 @@ class EmployeeController extends Controller
         {
             return abort(404);
         }
-        $employee->name = $request->input('name');
-        $employee->position = $request->input('position');
-        $employee->salary = $request->input('salary');
-        $employee->experience = $request->input('experience');
-        $employee->department_id = $request->input('department_id');
-        $employee->save();
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'position' => 'required|max:255',
+            'salary' => 'required',
+            'experience' => 'required',
+        ]);
+        if ($validated) {
+            $employee->name = $request->input('name');
+            $employee->position = $request->input('position');
+            $employee->salary = $request->input('salary');
+            $employee->experience = $request->input('experience');
+            $employee->department_id = $request->input('department_id');
+            $employee->save();
+        }
         return view('employee.update', ['employee' => $employee]);
     }
 

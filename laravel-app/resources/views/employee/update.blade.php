@@ -5,6 +5,6 @@
     </p>
 
     <p>
-        <a href="{{URL::to('employees')}}"> Return </a> to employees list
+        <a href="{{URL::to('employees')}}" class="underline"> Return </a> to employees list
     </p>
 @endsection

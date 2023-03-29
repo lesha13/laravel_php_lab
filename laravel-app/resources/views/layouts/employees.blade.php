@@ -3,8 +3,7 @@
 @section('title', 'Laravel')
 
 @section('header')
-    <p>Logo</p>
-    <nav>
+    <nav class="underline bg-gray-500 p-2">
         <a href="{{URL::to('employees')}}">
             Home
         </a>
