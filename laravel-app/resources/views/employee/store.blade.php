@@ -1,4 +1,5 @@
-@extends('layouts.employees')
+@extends('layoutsOld.employees')
+
 @section('content')
     <p>
         Employee {{$employee->name}} was stored

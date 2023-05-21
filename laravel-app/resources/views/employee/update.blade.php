@@ -1,4 +1,5 @@
-@extends('layouts.employees')
+@extends('layoutsOld.employees')
+
 @section('content')
     <p>
         Post {{$employee->name}} was updated

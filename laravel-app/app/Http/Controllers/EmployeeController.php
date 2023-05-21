@@ -14,6 +14,10 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
+//    public function __construct(){
+//        $this->authorizeResource(Employee::class);
+//    }
+
     public function index(): View
     {
         $employees = Employee::all();
@@ -26,6 +30,8 @@ class EmployeeController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('create', Employee::class);
+
         return view('employee.create');
     }
 
@@ -34,14 +40,16 @@ class EmployeeController extends Controller
      */
     public function store(Request $request): View
     {
+        $this->authorize('create', Employee::class);
+
         $validated = $request->validate([
             'name' => 'required|max:255',
             'position' => 'required|max:255',
-            'salary' => 'required',
-            'experience' => 'required',
+            'salary' => 'required|numeric|min:0',
+            'experience' => 'required|numeric|min:0',
         ]);
 
-        if ($validated){
+        if ($validated) {
             $employee = Employee::create(
                 $request->all(['name', 'position', 'salary', 'experience', 'department_id'])
             );
@@ -75,6 +83,9 @@ class EmployeeController extends Controller
         {
             return abort(404);
         }
+
+        $this->authorize('update', $employee);
+
         return view(
             'employee.edit',
             ['employee' => $employee]
@@ -91,11 +102,14 @@ class EmployeeController extends Controller
         {
             return abort(404);
         }
+
+        $this->authorize('update', $employee);
+
         $validated = $request->validate([
             'name' => 'required|max:255',
             'position' => 'required|max:255',
-            'salary' => 'required',
-            'experience' => 'required',
+            'salary' => 'required|numeric|min:0',
+            'experience' => 'required|numeric|min:0',
         ]);
         if ($validated) {
             $employee->name = $request->input('name');
@@ -118,6 +132,9 @@ class EmployeeController extends Controller
         {
             return abort(404);
         }
+
+        $this->authorize('delete', $employee);
+
         $employee->delete();
         return view('employee.destroy', ['employee' => $employee]);
     }

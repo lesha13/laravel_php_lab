@@ -1,17 +1,16 @@
-@extends('layouts.employees')
+@extends('layoutsOld.employees')
 
 @section('content')
     <h1>Employees</h1>
 
     <a href="{{URL::to('employees') . '/create'}}" class="underline"> Create new employee </a>
+    <div class="max-w-[33%]">
     @forelse($employees as $employee)
-        <div class="m-2 border-2 border-black">
+        <div class="min-w-fit m-2 border-2 border-black flex justify-center items-center flex-col">
             <div class="flex">
-                <h3>
-                    <a href="{{URL::to('employees') . '/' . $employee->id}}" class="underline p-2">
-                        {{$employee->name}}
-                    </a>
-                </h3>
+                <a href="{{URL::to('employees') . '/' . $employee->id}}" class="underline p-2">
+                    {{$employee->name}}
+                </a>
                 <a href="{{URL::to('employees') . '/' . $employee->id . '/edit'}}" class="underline p-2">
                     Edit
                 </a>
@@ -29,7 +28,7 @@
             No employees
         </p>
     @endforelse
-
+    </div>
     <h2>Departments</h2>
 
     @forelse($departments as $department)
